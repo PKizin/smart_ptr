@@ -1,0 +1,1 @@
+A template family of the smart pointer classes (like std::tr1::shared_ptr) which allow to use memory without leaks, i.e. provide control over the commands new and delete instead of the common C-like pointers.
