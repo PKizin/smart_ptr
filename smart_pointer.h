@@ -10,8 +10,30 @@ public:
 	explicit smart_pointer(T* obj);
 	explicit smart_pointer(const T& obj);
 	explicit smart_pointer(const smart_pointer<T>& obj);
-	~smart_pointer();
+	virtual ~smart_pointer();
 	smart_pointer<T>& operator=(const smart_pointer<T>& rhs);
+
+	template<typename S>
+	explicit smart_pointer(S* obj) : data(obj) {
+		ref_add();
+	}
+
+	template<typename S>
+	explicit smart_pointer(const S& obj) : data(&obj) {
+		ref_add();
+	}
+
+	template<typename S>
+	explicit smart_pointer(const smart_pointer<S>& obj) : data(obj.get()) {
+		ref_add();
+	}
+
+	template<typename S>
+	smart_pointer<T>& operator=(const smart_pointer<S>& rhs) {
+		data = rhs.get();
+		ref_add();
+		return *this;
+	}
 
 	operator T*() const;
 	T& operator*() const;
