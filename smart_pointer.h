@@ -26,7 +26,7 @@ public:
 	}
 
 	template<typename S>
-	smart_pointer(const S&& obj) : data(&obj) {
+	smart_pointer(S&& obj) : data(&obj) {
 		ref_add();
 	}
 
@@ -36,8 +36,9 @@ public:
 	}
 
 	template<typename S>
-	smart_pointer(const smart_pointer<S>&& obj) : data(obj.get()) {
+	smart_pointer(smart_pointer<S>&& obj) : data(obj.get()) {
 		ref_add();
+		obj.data = NULL;
 	}
 
 	template<typename S>
@@ -51,6 +52,7 @@ public:
 	smart_pointer<T>& operator=(const smart_pointer<S>&& rhs) {
 		data = rhs.get();
 		ref_add();
+		rhs->data = NULL;
 		return *this;
 	}
 
