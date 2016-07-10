@@ -1,7 +1,6 @@
 #include "smart_pointer.h"
 
-template<typename T>
-smart_pointer<T>::smart_pointer() : data(NULL) {
+template<typename T> smart_pointer<T>::smart_pointer() : data(NULL) {
 }
 
 template<typename T>
@@ -15,7 +14,17 @@ smart_pointer<T>::smart_pointer(const T& obj) : data(&obj) {
 }
 
 template<typename T>
+smart_pointer<T>::smart_pointer(T& obj) : data(&obj) {
+	ref_add();
+}
+
+template<typename T>
 smart_pointer<T>::smart_pointer(const smart_pointer<T>& obj) : data(obj.get()) {
+	ref_add();
+}
+
+template<typename T>
+smart_pointer<T>::smart_pointer(smart_pointer<T>& obj) : data(obj.get()) {
 	ref_add();
 }
 
